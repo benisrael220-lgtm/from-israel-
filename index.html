@@ -10,7 +10,6 @@ body {
     margin: 0;
     font-family: 'Segoe UI', sans-serif;
     background: linear-gradient(135deg, #ffdde1, #ee9ca7);
-    height: 100vh;
     overflow: hidden;
 }
 
@@ -21,20 +20,25 @@ body {
     height: 100vh;
 }
 
-.card {
+.slide {
+    display: none;
     background: white;
     padding: 30px;
-    border-radius: 25px;
+    border-radius: 22px;
     width: 90%;
     max-width: 420px;
     text-align: center;
-    box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    animation: pop 0.6s ease;
+    box-shadow: 0 20px 35px rgba(0,0,0,0.15);
+    animation: fadeIn 0.6s ease;
 }
 
-@keyframes pop {
-    from { transform: scale(0.9); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+.slide.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
 }
 
 h2 {
@@ -43,42 +47,34 @@ h2 {
 
 p {
     color: #444;
+    line-height: 1.7;
     font-size: 17px;
-    line-height: 1.6;
-}
-
-.buttons {
-    margin-top: 20px;
 }
 
 button {
-    padding: 12px 22px;
-    margin: 10px;
+    margin-top: 20px;
+    padding: 12px 24px;
     border: none;
     border-radius: 30px;
+    background: #ff4d6d;
+    color: white;
     font-size: 16px;
     cursor: pointer;
 }
 
-.yes {
-    background: #ff4d6d;
-    color: white;
-}
-
-.no {
-    background: #ddd;
-    color: #444;
+button:hover {
+    background: #e63e5c;
 }
 
 .heart {
     position: absolute;
-    font-size: 22px;
+    font-size: 20px;
     animation: float 4s linear forwards;
 }
 
 @keyframes float {
     from { transform: translateY(0); opacity: 1; }
-    to { transform: translateY(-150px); opacity: 0; }
+    to { transform: translateY(-120px); opacity: 0; }
 }
 </style>
 </head>
@@ -86,77 +82,64 @@ button {
 <body>
 
 <div class="container">
-    <div class="card" id="card">
-        <h2>Hi Washuka 🌸</h2>
-        <p>
-            This little space was made with love,  
-            smiles, and good intentions.
-        </p>
-        <div class="buttons">
-            <button class="yes" onclick="start()">Continue 💕</button>
-        </div>
-    </div>
+
+<div class="slide active">
+    <h2>Hi Washuka 🌸</h2>
+    <p>
+        This was made gently,  
+        with warmth and care.
+    </p>
+    <button onclick="nextSlide(); hearts();">Start ✨</button>
+</div>
+
+<div class="slide">
+    <p>
+        Some feelings grow best  
+        when they are patient and real.
+    </p>
+    <button onclick="nextSlide(); hearts();">Next 💕</button>
+</div>
+
+<div class="slide">
+    <p>
+        No pressure.  
+        Just honesty, effort, and kindness.
+    </p>
+    <button onclick="nextSlide(); hearts();">Continue 💖</button>
+</div>
+
+<div class="slide">
+    <p>
+        You deserve something safe,  
+        consistent, and sincere.
+    </p>
+    <button onclick="nextSlide(); hearts();">Almost ✨</button>
+</div>
+
+<div class="slide">
+    <h2>From Israel 💌</h2>
+    <p>
+        Made with intention,  
+        respect, and love.
+    </p>
+</div>
+
 </div>
 
 <script>
-let noCount = 0;
+let current = 0;
+const slides = document.querySelectorAll('.slide');
 
-function start() {
-    document.getElementById("card").innerHTML = `
-        <h2>One simple thing 💖</h2>
-        <p>
-            Would you like to stay here  
-            just a little longer?
-        </p>
-        <div class="buttons">
-            <button class="yes" onclick="yesLove()">Yes 💕</button>
-            <button class="no" onclick="noLove()">No 🙈</button>
-        </div>
-    `;
-    hearts();
+function nextSlide() {
+    slides[current].classList.remove('active');
+    current++;
+    if (current < slides.length) {
+        slides[current].classList.add('active');
+    }
 }
 
-function noLove() {
-    noCount++;
-
-    let messages = [
-        "Are you sure you wanna leave? 🤨",
-        "Hmmm… think again 😌",
-        "Eiii 😭 don’t go yet",
-        "Okay but… this is kinda cute though 👀",
-        "Last chance 👀 press YES my love 😂"
-    ];
-
-    let msg = messages[Math.min(noCount - 1, messages.length - 1)];
-
-    document.getElementById("card").innerHTML = `
-        <h2>Wait 😅</h2>
-        <p>${msg}</p>
-        <div class="buttons">
-            <button class="yes" onclick="yesLove()">Yes 💖</button>
-            <button class="no" onclick="noLove()">No 😭</button>
-        </div>
-    `;
-}
-
-function yesLove() {
-    document.getElementById("card").innerHTML = `
-        <h2>Yay 🥰</h2>
-        <p>
-            That made me smile.  
-            This was made with care,  
-            warmth, and a full heart.
-        </p>
-        <p>
-            From Israel 💌
-        </p>
-    `;
-    hearts(true);
-}
-
-function hearts(many=false) {
-    let count = many ? 20 : 10;
-    for (let i = 0; i < count; i++) {
+function hearts() {
+    for (let i = 0; i < 8; i++) {
         let heart = document.createElement("div");
         heart.className = "heart";
         heart.innerHTML = "💗";
