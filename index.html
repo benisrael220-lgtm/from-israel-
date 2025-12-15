@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>For Washuka 💖</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ffd6e0, #ff9aaf);
+    overflow: hidden;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.slide {
+    display: none;
+    background: white;
+    padding: 32px;
+    border-radius: 24px;
+    width: 90%;
+    max-width: 430px;
+    text-align: center;
+    box-shadow: 0 25px 40px rgba(0,0,0,0.18);
+    animation: fadeIn 0.7s ease;
+}
+
+.slide.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+h2 {
+    color: #ff4d6d;
+    margin-bottom: 12px;
+}
+
+p {
+    color: #444;
+    font-size: 17px;
+    line-height: 1.7;
+}
+
+button {
+    margin-top: 22px;
+    padding: 12px 26px;
+    border: none;
+    border-radius: 30px;
+    background: #ff4d6d;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #e63e5c;
+}
+
+/* Hearts */
+.heart {
+    position: absolute;
+    font-size: 18px;
+    animation: floatUp 4s linear forwards;
+}
+
+@keyframes floatUp {
+    from { transform: translateY(0); opacity: 1; }
+    to { transform: translateY(-140px); opacity: 0; }
+}
+
+/* Sparkles */
+.sparkle {
+    position: absolute;
+    font-size: 14px;
+    animation: sparkle 3s ease forwards;
+}
+
+@keyframes sparkle {
+    0% { opacity: 0; transform: scale(0.5); }
+    50% { opacity: 1; transform: scale(1); }
+    100% { opacity: 0; transform: scale(0.5); }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Background Music -->
+<audio id="bgMusic" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9b7c2fd3e4.mp3" type="audio/mpeg">
+</audio>
+
+<div class="container">
+
+<!-- Slide 1 -->
+<div class="slide active">
+    <h2>Hi Washuka 🌸</h2>
+    <p>
+        This little space was created softly,  
+        with warmth, care, and genuine intention.
+    </p>
+    <button onclick="startExperience()">Begin ✨</button>
+</div>
+
+<!-- Slide 2 -->
+<div class="slide">
+    <p>
+        Some things don’t need loud words.  
+        They just need honesty  
+        and a calm heart behind them.
+    </p>
+    <button onclick="nextSlide(); hearts(); sparkles();">Continue 💗</button>
+</div>
+
+<!-- Slide 3 -->
+<div class="slide">
+    <p>
+        This isn’t about rushing, fixing, or forcing.  
+        It’s about showing up gently  
+        and letting things feel natural.
+    </p>
+    <button onclick="nextSlide(); hearts(); sparkles();">Tap ✨</button>
+</div>
+
+<!-- Slide 4 -->
+<div class="slide">
+    <p>
+        You deserve patience, consistency,  
+        and something that feels safe  
+        without losing its magic.
+    </p>
+    <button onclick="nextSlide(); hearts(); sparkles();">Almost 💕</button>
+</div>
+
+<!-- Slide 5 -->
+<div class="slide">
+    <h2>From Israel 💌</h2>
+    <p>
+        This was made with thought,  
+        respect, and a lot of heart.
+    </p>
+    <p>
+        Nothing heavy.  
+        Just something real.
+    </p>
+</div>
+
+</div>
+
+<script>
+let current = 0;
+const slides = document.querySelectorAll('.slide');
+const music = document.getElementById("bgMusic");
+
+function startExperience() {
+    music.play();
+    nextSlide();
+    hearts();
+    sparkles();
+}
+
+function nextSlide() {
+    slides[current].classList.remove('active');
+    current++;
+    if (current < slides.length) {
+        slides[current].classList.add('active');
+    }
+}
+
+function hearts() {
+    for (let i = 0; i < 7; i++) {
+        let h = document.createElement("div");
+        h.className = "heart";
+        h.innerHTML = "💗";
+        h.style.left = Math.random() * 100 + "vw";
+        h.style.top = "85vh";
+        document.body.appendChild(h);
+        setTimeout(() => h.remove(), 4000);
+    }
+}
+
+function sparkles() {
+    for (let i = 0; i < 10; i++) {
+        let s = document.createElement("div");
+        s.className = "sparkle";
+        s.innerHTML = "✨";
+        s.style.left = Math.random() * 100 + "vw";
+        s.style.top = Math.random() * 100 + "vh";
+        document.body.appendChild(s);
+        setTimeout(() => s.remove(), 3000);
+    }
+}
+</script>
+
+</body>
+</html>
